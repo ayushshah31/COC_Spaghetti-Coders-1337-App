@@ -15,7 +15,7 @@ class _GetStartedState extends State<GetStarted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff212638),
+      backgroundColor: Color(0xff141332),
       body: Container(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -41,8 +41,8 @@ class _GetStartedState extends State<GetStarted> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: (){
-                  // Get.to(const Wrapper());
-                  Get.to(LoginMeta());
+                  Get.to(const LoginMeta());
+                  // Get.to(LoginMeta());
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(const Color(0xff4969A6))),

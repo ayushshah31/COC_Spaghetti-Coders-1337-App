@@ -1,3 +1,6 @@
+import 'package:coc_app/UI/home.dart';
+import 'package:coc_app/UI/profile.dart';
+import 'package:coc_app/UI/swap.dart';
 import 'package:flutter/material.dart';
 import 'package:coc_app/UI/kyc.dart';
 
@@ -18,7 +21,10 @@ class _BottomBarStartState extends State<BottomBarStart> {
     // TODO: implement initState
     super.initState();
     pages = [
-      const KYC(),
+      const HomePage(),
+      const Swap(),
+      const ProfilePage()
+      // const KYC(),
       // const Income(),
       // const Profile()
     ];
@@ -30,6 +36,7 @@ class _BottomBarStartState extends State<BottomBarStart> {
       backgroundColor: const Color(0xff141332),
       body: SafeArea(child: pages[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
         backgroundColor: Color(0xff6359E9),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
@@ -49,7 +56,7 @@ class _BottomBarStartState extends State<BottomBarStart> {
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'try'
+              label: 'profile'
           ),
 
         ],

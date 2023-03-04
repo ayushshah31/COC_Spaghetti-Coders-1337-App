@@ -17,7 +17,7 @@ void main() async{
     initialData: FirebaseAuth.instance.currentUser,
     child: Theme(
       data: ThemeData(
-          backgroundColor: const Color(0xff141332),
+          backgroundColor: Color(0xff141332),
           textTheme: GoogleFonts.poppinsTextTheme(Typography.blackHelsinki)
         // fontFamily: GoogleFonts.poppins()
       ),

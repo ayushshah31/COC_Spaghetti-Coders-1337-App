@@ -1,16 +1,19 @@
 import 'dart:io' as io;
 import 'dart:math';
+import 'package:coc_app/UI/bottomBar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_navigation/src/routes/circular_reveal_clipper.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class KYC extends StatefulWidget {
-  const KYC({Key? key}) : super(key: key);
+  final String address;
+  const KYC({super.key, required this.address});
 
   @override
   State<KYC> createState() => _KYCState();
@@ -29,7 +32,7 @@ class _KYCState extends State<KYC> {
   var intValue = Random().nextInt(1000);
 
   //collection
-  final CollectionReference _productss = FirebaseFirestore.instance.collection('products');
+  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   Future<UploadTask?> uploadFile(XFile? file) async {
     if (file == null) {
@@ -59,14 +62,43 @@ class _KYCState extends State<KYC> {
     } else {
       uploadTask = ref.putFile(io.File(file.path), metadata);
     }
-    print(ref.fullPath);
-    print("url: " + await ref.getDownloadURL());
+    String path = "";
+    try {
+      print(ref.fullPath);
+      print("url: " + await ref.getDownloadURL());
+      path = await ref.getDownloadURL();
+      // print("url: $path");
+    } catch(e){
+      print('err:' + e.toString());
+    }
+    try {
+      print("JAAAJSJAJAJAJQ");
+      await _users.add({
+        'name': name,
+        'aadhar':aadhar,
+        'address':widget.address,
+        'kycCompleted':false,
+        'aadharPath':path
+      })
+        .then((value){
+          print("User Added");
+          Get.to(BottomBarStart());
+        })
+        .catchError((error) => print("Failed to add user: $error"));
+      // print("res: " + result.toString());
+      // print("Done");
+    } catch(e){
+      print("this is error: " + e.toString());
+    }
     return Future.value(uploadTask);
   }
+
+  final CustomClipper _clipper = CircularRevealClipper(fraction: 2);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff141332),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("KYC"),
@@ -74,121 +106,125 @@ class _KYCState extends State<KYC> {
         foregroundColor: Colors.white,
       ),
       body: Center(
-          child: SingleChildScrollView(
-            child: Container(
-                margin: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    if (textScanning) const CircularProgressIndicator(),
-                    if (!textScanning && imageFile == null)
-                      Container(
-                        width: 300,
-                        height: 300,
-                        color: Colors.grey[300]!,
-                      ),
-                    if (imageFile != null) Image.file(io.File(imageFile!.path)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            padding: const EdgeInsets.only(top: 10),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                onPrimary: Colors.grey,
-                                shadowColor: Colors.grey[400],
-                                elevation: 10,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0)),
-                              ),
-                              onPressed: () {
-                                getImage(ImageSource.gallery);
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 5),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.image,
-                                      size: 30,
-                                    ),
-                                    Text(
-                                      "Gallery",
-                                      style: TextStyle(
-                                          fontSize: 13, color: Colors.grey[600]),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )),
-                        Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            padding: const EdgeInsets.only(top: 10),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                onPrimary: Colors.grey,
-                                shadowColor: Colors.grey[400],
-                                elevation: 10,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0)),
-                              ),
-                              onPressed: () {
-                                getImage(ImageSource.camera);
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 5),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.camera_alt,
-                                      size: 30,
-                                    ),
-                                    Text(
-                                      "Camera",
-                                      style: TextStyle(
-                                          fontSize: 13, color: Colors.grey[600]),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )),
-                      ],
-                    ),
+          child: Container(
+              margin: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (textScanning) const CircularProgressIndicator(),
+                  if (!textScanning && imageFile == null)
                     const SizedBox(
-                      height: 20,
+                      width: 300,
+                      height: 300,
+                      // color: Colors.grey[300]!,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('aadhar No: $aadhar',style: TextStyle(fontSize: 20),),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text('Name: $name',style: TextStyle(fontSize: 20),),
-                    ),
-                    (imageFile != null && aadhar!="" && gotAadhar)?
-                    ElevatedButton(
-                        onPressed: () async{
-                          UploadTask? result = await uploadFile(imageFile);
-                          print(result!.snapshot.printInfo);
-                        },
-                        child: const Text("Verify")
-                    ): Text("Recapture aadhar"),
-                    // Container(
-                    //   child: Text(
-                    //     scannedText,
-                    //     style: TextStyle(fontSize: 20),
-                    //   ),
-                    // )
-                  ],
-                )),
-          )),
+                  if (imageFile != null) ClipRect(
+                    clipBehavior: Clip.hardEdge,
+                      child: Align(
+                        alignment: Alignment.center,
+                          heightFactor: 0.8,
+                          child: Image.file(io.File(imageFile!.path)))
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.only(top: 10),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              onPrimary: Colors.grey,
+                              shadowColor: Colors.grey[400],
+                              elevation: 10,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                            ),
+                            onPressed: () {
+                              getImage(ImageSource.gallery);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 5),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.image,
+                                    size: 30,
+                                  ),
+                                  Text(
+                                    "Gallery",
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.grey[600]),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )),
+                      Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.only(top: 10),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              onPrimary: Colors.grey,
+                              shadowColor: Colors.grey[400],
+                              elevation: 10,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                            ),
+                            onPressed: () {
+                              getImage(ImageSource.camera);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 5),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    size: 30,
+                                  ),
+                                  Text(
+                                    "Camera",
+                                    style: TextStyle(
+                                        fontSize: 13, color: Colors.grey[600]),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text('aadhar No: $aadhar',style: TextStyle(fontSize: 20),),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text('Name: $name',style: TextStyle(fontSize: 20),),
+                  ),
+                  (imageFile != null && aadhar!="" && gotAadhar)?
+                  ElevatedButton(
+                      onPressed: () async{
+                        UploadTask? result = await uploadFile(imageFile);
+                        print(result!.snapshot.printInfo);
+                      },
+                      child: const Text("Verify")
+                  ): Text("Recapture Aadhar",style: GoogleFonts.poppins(fontSize: 20,color: Colors.white),),
+                  // Container(
+                  //   child: Text(
+                  //     scannedText,
+                  //     style: TextStyle(fontSize: 20),
+                  //   ),
+                  // )
+                ],
+              ))),
     );
   }
 

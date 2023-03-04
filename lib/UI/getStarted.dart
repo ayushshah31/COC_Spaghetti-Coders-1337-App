@@ -1,3 +1,4 @@
+import 'package:coc_app/UI/loginMeta.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class _GetStartedState extends State<GetStarted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff141332),
+      backgroundColor: const Color(0xff212638),
       body: Container(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +33,7 @@ class _GetStartedState extends State<GetStarted> {
               child: Text('Some Msg',
               style: GoogleFonts.poppins(
                 fontSize: 24,
-                color: Colors.white
+                color: Color(0xffF9FBFF)
               ),),
             ),
             const SizedBox(height:50),
@@ -40,10 +41,11 @@ class _GetStartedState extends State<GetStarted> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: (){
-                  Get.to(const Wrapper());
+                  // Get.to(const Wrapper());
+                  Get.to(LoginMeta());
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(const Color(0xff6359E9))),
+                  backgroundColor: MaterialStateProperty.all(const Color(0xff4969A6))),
                 child: Text("Get Started"),
               )
             ),
@@ -53,5 +55,3 @@ class _GetStartedState extends State<GetStarted> {
     );
   }
 }
-
-

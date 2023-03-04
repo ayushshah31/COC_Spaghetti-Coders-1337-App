@@ -1,3 +1,4 @@
+import 'package:coc_app/UI/loginMeta.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:coc_app/UI/bottomBar.dart';
 // import 'package:hackniche_finance/UI/getStarted.dart';
@@ -14,8 +15,11 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
 
+    // final userMeta
+
     if(user == null) {
-      return const LoginPage();
+      // return const LoginPage();
+      return const LoginMeta();
     }
     return const BottomBarStart();
   }

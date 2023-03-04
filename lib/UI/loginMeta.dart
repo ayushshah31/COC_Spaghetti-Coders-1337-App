@@ -81,6 +81,8 @@ class _LoginMetaState extends State<LoginMeta> {
               () {
             _session = _session;
             print("Success");
+            print(_session.accounts[0]);
+            print(_session);
             Get.to(BottomBarStart());
           },
         ));
@@ -99,41 +101,59 @@ class _LoginMetaState extends State<LoginMeta> {
         }));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Page'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text('Login Page',style: GoogleFonts.poppins(fontSize: 28),),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Image.asset(
-            //   'assets/images/main_page_image.png',
-            //   fit: BoxFit.fitHeight,
-            // ),
-            (_session != null) ? Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Account',
-                        style: GoogleFonts.merriweather(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Text(
-                        '${_session.accounts[0]}',
-                        style: GoogleFonts.inconsolata(fontSize: 16),
-                      ),
-                    ]
-                )
-            ) :
-            ElevatedButton(
+      backgroundColor: const Color(0xff141332),
+      body: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Hero(
+            tag: 'logo',
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 240, 10, 30),
+                child: Image.asset('assets/logo.png',scale: 0.5,)
+            ),
+          ),
+          (_session != null) ? Container(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Account',
+                      style: GoogleFonts.merriweather(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    Text(
+                      '${_session.accounts[0]}',
+                      style: GoogleFonts.inconsolata(fontSize: 16),
+                    ),
+                  ]
+              )
+          ) :
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 80, 20, 0),
+            child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(width: 2.0, color: Color(0xff4fbcd3),strokeAlign: 0),
+                ),
                 onPressed: (){
                   loginUsingMetamask(context);
                 },
-                child: const Text("Connect with Metamask")),
-            SizedBox(height: 20),
-          ],
-        ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Connect with Metamask",style: GoogleFonts.poppins(fontSize: 18,color: Color(0xff4fbcd3)),),
+                    Image.asset('assets/metamask.png',scale: 2,)
+                ]
+                 )),
+          ),
+          SizedBox(height: 20),
+        ],
       ),
     );
   }

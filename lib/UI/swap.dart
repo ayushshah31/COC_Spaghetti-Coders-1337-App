@@ -10,7 +10,11 @@ class Swap extends StatefulWidget {
 
 class _SwapState extends State<Swap> {
   int a=0,b=0,c=0,d=0;
-  String dropValue1 = "Enter",dropValue2 = "Enter",dropValue3 = "Enter",dropValue4 = "Enter";
+  String dropValue1 = "ETH",dropValue2 = "DAI",dropValue3 = "ETH",dropValue4 = "DAI";
+
+  var _coins = [
+    "ETH","DAI"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +65,10 @@ class _SwapState extends State<Swap> {
                                   elevation: 5,
                                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                   borderRadius: BorderRadius.circular(20),
-                                  items:  const [DropdownMenuItem(child: Text("Eth"),value: 'ETH',),DropdownMenuItem(child: Text("Den"),value: 'DEN',)],
+                                  items:   _coins
+                                      .map((String item) =>
+                                      DropdownMenuItem<String>(child: Text(item), value: item))
+                                      .toList(),
                                   onChanged: (String? newValue){
                                     setState(() {
                                       dropValue1 = newValue!;
@@ -88,12 +95,15 @@ class _SwapState extends State<Swap> {
                                   ),
                                   DropdownButton(
                                     dropdownColor: Color(0xff323b53),
-                                    // value: dropValue,
+                                    value: dropValue2,
                                     style: TextStyle(fontSize: 14,color: Color(0xffffffff)),
                                     elevation: 5,
                                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                     borderRadius: BorderRadius.circular(20),
-                                    items:  const [DropdownMenuItem(child: Text("Eth"),value: 'ETH',),DropdownMenuItem(child: Text("Den"),value: 'DEN',)],
+                                    items: _coins
+                                        .map((String item) =>
+                                        DropdownMenuItem<String>(child: Text(item), value: item))
+                                        .toList(),
                                     onChanged: (String? newValue){
                                       setState(() {
                                         dropValue2 = newValue!;
@@ -131,10 +141,10 @@ class _SwapState extends State<Swap> {
                           //   style: BorderStyle.solid,
                           // ),
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(width: 2.0, color: Colors.blue,strokeAlign: 0),
+                            side: BorderSide(width: 2.0, color: Color(0xff4fbcd3),strokeAlign: 0),
                           ),
                           onPressed: (){print("Swap");},
-                          child: Text("Swap")
+                          child: Text("Swap",style: GoogleFonts.poppins(color: Color(0xff4fbcd3)),)
                       )
                     ],
                   )
@@ -151,7 +161,7 @@ class _SwapState extends State<Swap> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Swap ",style: GoogleFonts.poppins(fontSize: 20,color: Colors.white),),
+                  Text("Add ",style: GoogleFonts.poppins(fontSize: 20,color: Colors.white),),
                   Container(
                     height: 150,
                     child: Stack(
@@ -170,12 +180,15 @@ class _SwapState extends State<Swap> {
                                 ),
                                 DropdownButton(
                                   dropdownColor: Color(0xff323b53),
-                                  // value: dropValue,
+                                  value: dropValue3,
                                   style: TextStyle(fontSize: 14,color: Color(0xffffffff)),
                                   elevation: 5,
                                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                   borderRadius: BorderRadius.circular(20),
-                                  items:  const [DropdownMenuItem(child: Text("Eth"),value: 'ETH',),DropdownMenuItem(child: Text("Den"),value: 'DEN',)],
+                                  items:  _coins
+                                      .map((String item) =>
+                                      DropdownMenuItem<String>(child: Text(item), value: item))
+                                      .toList(),
                                   onChanged: (String? newValue){
                                     setState(() {
                                       dropValue3 = newValue!;
@@ -202,12 +215,15 @@ class _SwapState extends State<Swap> {
                                   ),
                                   DropdownButton(
                                     dropdownColor: Color(0xff323b53),
-                                    // value: dropValue,
+                                    value: dropValue4,
                                     style: TextStyle(fontSize: 14,color: Color(0xffffffff)),
                                     elevation: 5,
                                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                     borderRadius: BorderRadius.circular(20),
-                                    items:  const [DropdownMenuItem(child: Text("Eth"),value: 'ETH',),DropdownMenuItem(child: Text("Den"),value: 'DEN',)],
+                                    items:  _coins
+                                        .map((String item) =>
+                                        DropdownMenuItem<String>(child: Text(item), value: item))
+                                        .toList(),
                                     onChanged: (String? newValue){
                                       setState(() {
                                         dropValue4 = newValue!;
@@ -245,10 +261,10 @@ class _SwapState extends State<Swap> {
                         //   style: BorderStyle.solid,
                         // ),
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(width: 2.0, color: Colors.blue,strokeAlign: 0),
+                            side: BorderSide(width: 2.0, color: Color(0xff4fbcd3),strokeAlign: 0),
                           ),
-                          onPressed: (){print("Swap");},
-                          child: Text("Swap")
+                          onPressed: (){print("Add");},
+                          child: Text("Add",style: GoogleFonts.poppins(color: Color(0xff4fbcd3)),)
                       )
                     ],
                   )

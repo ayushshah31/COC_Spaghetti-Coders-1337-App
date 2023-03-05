@@ -117,7 +117,7 @@ class _LoginMetaState extends State<LoginMeta> {
           Hero(
             tag: 'logo',
             child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 240, 10, 30),
+                padding: const EdgeInsets.fromLTRB(10, 150, 10, 30),
                 child: Image.asset('assets/logo.png',scale: 0.5,)
             ),
           ),
@@ -138,9 +138,9 @@ class _LoginMetaState extends State<LoginMeta> {
                   ]
               )
           ) : Container(),
-              Image.asset('images/wallet.png'),
+              Image.asset('images/giphy.gif',scale: 2,),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 80, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(width: 2.0, color: Color(0xff4fbcd3),strokeAlign: 0),

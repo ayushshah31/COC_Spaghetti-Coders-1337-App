@@ -58,6 +58,20 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: const Color(0xff0d101d),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(1,1),
+                  color: Color(0xff44D62C),
+                  blurRadius: 5,
+                  blurStyle: BlurStyle.solid
+                ),
+                BoxShadow(
+                    offset: Offset(-1,-1),
+                    color: Color(0xff006E33),
+                    blurRadius: 1,
+                    blurStyle: BlurStyle.solid
+                )
+              ]
             ),
             height:100,
             width: double.infinity,
@@ -70,15 +84,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("My Balance",style: GoogleFonts.poppins(color: const Color(0xff8C89B4),fontSize: 22)),
-                      Text("3.00",style: GoogleFonts.poppins(color: Colors.white,fontSize: 22)),
-                      // Stack(
-                      //   children: [
-                      //     Image.asset('assets/Rectangle 34.png',scale: 0.9,),
-                      //     const Padding(padding: EdgeInsets.fromLTRB(10, 3, 0, 0),child: Text('+1.29%',style: TextStyle(
-                      //       color: Colors.green,
-                      //     ),),)
-                      //   ],
-                      // )
+                      Text("2.89572",style: GoogleFonts.poppins(color: Colors.white,fontSize: 22)),
                     ],
                   ),
                 ),

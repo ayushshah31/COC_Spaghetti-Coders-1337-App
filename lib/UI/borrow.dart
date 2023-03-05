@@ -30,6 +30,7 @@ class _BorrowState extends State<Borrow> {
         centerTitle: true,
         backgroundColor: Color(0xff141332),
       ),
+      backgroundColor: Color(0xff141332),
       body: Column(
           children: [
             Container(
@@ -39,14 +40,15 @@ class _BorrowState extends State<Borrow> {
                     Text("Your Supplies ",style: GoogleFonts.poppins(fontSize: 20,color: Colors.white),),
                     Divider(color: Colors.blueGrey),
                     Container(
-                      height: 100,
+                      height: 40,
                       child: ListView.builder(
                           itemCount: 1,
                           itemBuilder: (context,index){
-                            return const Text("Nothing Supplied Yet");
+                            return Text("Nothing Supplied Yet",style: GoogleFonts.poppins(fontSize: 14,color: Colors.grey),);
                           }
                       ),
                     ),
+                    Divider(color: Colors.white,thickness: 2,),
                     GestureDetector(
                       child: Container(
                         padding: EdgeInsets.all(10),
@@ -72,7 +74,7 @@ class _BorrowState extends State<Borrow> {
                               ],
                             ),
                             Container(
-                              height: 200,
+                              height: 450,
                               child: ListView.builder(
                                   itemCount: assets.length,
                                   itemBuilder: (context, index){

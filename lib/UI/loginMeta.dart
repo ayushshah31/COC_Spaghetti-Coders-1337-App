@@ -137,8 +137,8 @@ class _LoginMetaState extends State<LoginMeta> {
                     ),
                   ]
               )
-          ) :
-              Image.asset('wallet.png'),
+          ) : Container(),
+              Image.asset('images/wallet.png'),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 80, 20, 0),
             child: OutlinedButton(

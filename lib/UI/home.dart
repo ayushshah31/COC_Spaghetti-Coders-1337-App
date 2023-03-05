@@ -1,6 +1,8 @@
+import 'package:coc_app/UI/borrow.dart';
 import 'package:coc_app/UI/supply.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -98,7 +100,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 20),
           GestureDetector(
             onTap: (){
-
+              Get.to(Supply());
             },
             child: Container(
               padding: EdgeInsets.all(10),
@@ -158,7 +160,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 20,),
           GestureDetector(
             onTap: (){
-              // Get.to(Supply());
+              Get.to(Borrow());
             },
             child: Container(
               padding: EdgeInsets.all(10),

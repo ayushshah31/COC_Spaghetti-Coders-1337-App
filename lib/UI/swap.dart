@@ -1,20 +1,44 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
+import 'package:web3dart/web3dart.dart';
+import '../constants/constants.dart';
+import '../services/functions-dai.dart';
+import '../services/functions-exc.dart';
+import 'package:coc_app/constants/constants.dart';
 
 class Swap extends StatefulWidget {
-  const Swap({Key? key}) : super(key: key);
+  final String? address;
+  const Swap({Key? key, required this.address}) : super(key: key);
 
   @override
   State<Swap> createState() => _SwapState();
 }
 
 class _SwapState extends State<Swap> {
-  int a=0,b=0,c=0,d=0;
+  TextEditingController a = TextEditingController();
+  TextEditingController b = TextEditingController();
+  TextEditingController c = TextEditingController();
+  TextEditingController d = TextEditingController();
+
+  User? user = FirebaseAuth.instance.currentUser;
+
   String dropValue1 = "ETH",dropValue2 = "DAI",dropValue3 = "ETH",dropValue4 = "DAI";
 
   var _coins = [
     "ETH","DAI"
   ];
+
+  Client? httpClient;
+  Web3Client? ethClient;
+
+  @override
+  void initState() {
+    httpClient = Client();
+    ethClient = Web3Client(Alchemy_url, httpClient!);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +80,7 @@ class _SwapState extends State<Swap> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                                child: Text("$a",style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
+                                child: Text("0",style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
                               ),
                               DropdownButton(
                                 dropdownColor: Color(0xff323b53),
@@ -91,7 +115,7 @@ class _SwapState extends State<Swap> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                                    child: Text("$b",style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
+                                    child: Text("1",style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
                                   ),
                                   DropdownButton(
                                     dropdownColor: Color(0xff323b53),
@@ -176,7 +200,7 @@ class _SwapState extends State<Swap> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                                  child: Text("$c",style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
+                                  child: Text('0',style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
                                 ),
                                 DropdownButton(
                                   dropdownColor: Color(0xff323b53),
@@ -211,7 +235,7 @@ class _SwapState extends State<Swap> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                                    child: Text("$d",style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
+                                    child: Text("4",style: GoogleFonts.poppins(fontSize: 15,color: Color(0xff5c6784)),),
                                   ),
                                   DropdownButton(
                                     dropdownColor: Color(0xff323b53),
@@ -263,7 +287,15 @@ class _SwapState extends State<Swap> {
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(width: 2.0, color: Color(0xff4fbcd3),strokeAlign: 0),
                           ),
-                          onPressed: (){print("Add");},
+                          onPressed: () async{
+                            print("Add");
+                            EthereumAddress addr = EthereumAddress.fromHex(contractAddress1);
+                            print(addr);
+                            print(widget.address.toString());
+                            var appr = await approve(addr,100,ethClient!);
+                            var res = await addLiquidity(100, ethClient!);
+                            print(res);
+                            },
                           child: Text("Add",style: GoogleFonts.poppins(color: Color(0xff4fbcd3)),)
                       )
                     ],

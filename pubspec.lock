@@ -141,10 +141,10 @@ packages:
     dependency: transitive
     description:
       name: cryptography
-      sha256: "5332b45f690466e775724ec216bdccb29db0d5c1a7c21d653b2a07838e80ca18"
+      sha256: d567808b0640adc63e0f58dbea85123175f2674056fe1df5685bcb2866b4d153
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.3.0"
   cupertino_icons:
     dependency: "direct main"
     description:

@@ -82,7 +82,7 @@ class _KYCState extends State<KYC> {
       })
         .then((value){
           print("User Added");
-          Get.to(BottomBarStart());
+          Get.to(BottomBarStart(address: widget.address));
         })
         .catchError((error) => print("Failed to add user: $error"));
       // print("res: " + result.toString());
@@ -203,11 +203,11 @@ class _KYCState extends State<KYC> {
                   ),
                   Container(
                     padding: EdgeInsets.all(10),
-                    child: Text('aadhar No: $aadhar',style: TextStyle(fontSize: 20),),
+                    child: Text('aadhar No: $aadhar',style: GoogleFonts.poppins(fontSize: 20,color: Colors.white),),
                   ),
                   Container(
                     padding: EdgeInsets.all(10),
-                    child: Text('Name: $name',style: TextStyle(fontSize: 20),),
+                    child: Text('Name: $name',style: GoogleFonts.poppins(fontSize: 20,color: Colors.white,),),
                   ),
                   (imageFile != null && aadhar!="" && gotAadhar)?
                   ElevatedButton(

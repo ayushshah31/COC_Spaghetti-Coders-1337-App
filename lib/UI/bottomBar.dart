@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 
 class BottomBarStart extends StatefulWidget {
-  const BottomBarStart({Key? key}) : super(key: key);
+  String? address;
+  BottomBarStart({required  this.address});
 
   @override
   State<BottomBarStart> createState() => _BottomBarStartState();
@@ -23,8 +24,8 @@ class _BottomBarStartState extends State<BottomBarStart> {
     super.initState();
     pages = [
       const HomePage(),
-      const Swap(),
-      const ProfilePage()
+      Swap(address: widget.address),
+      ProfilePage(address: widget.address)
       // const KYC(),
       // const Income(),
       // const Profile()
@@ -36,32 +37,6 @@ class _BottomBarStartState extends State<BottomBarStart> {
     return Scaffold(
       backgroundColor: const Color(0xff141332),
       body: SafeArea(child: pages[_selectedIndex]),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: _selectedIndex,
-      //   backgroundColor: Color(0xff6359E9),
-      //   selectedItemColor: Colors.white,
-      //   unselectedItemColor: Colors.grey,
-      //   onTap: (curentIndex){
-      //     setState(() {
-      //       _selectedIndex = curentIndex;
-      //     });
-      //   },
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.home),
-      //       label: 'home'
-      //     ),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.wallet),
-      //         label: 'Income'
-      //     ),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.person),
-      //         label: 'profile'
-      //     ),
-      //
-      //   ],
-      // ),
       bottomNavigationBar: MoltenBottomNavigationBar(
         selectedIndex: _selectedIndex,
         borderRaduis: BorderRadius.circular(10),
@@ -70,7 +45,9 @@ class _BottomBarStartState extends State<BottomBarStart> {
         barColor: Color(0xff232630),
         borderSize: 5,
         domeCircleColor: Color(0xff4fbcd3),
+        barHeight: 50,
         curve: Curves.easeOutQuart,
+        domeCircleSize: 45,
         tabs: [
           MoltenTab(
               icon: Icon(Icons.home),

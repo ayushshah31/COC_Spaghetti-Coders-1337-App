@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coc_app/UI/bottomBar.dart';
 import 'package:coc_app/UI/kyc.dart';
+import 'package:coc_app/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:walletconnect_dart/walletconnect_dart.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart';
+import 'package:web3dart/web3dart.dart';
 import '../auth/auth.dart';
 
 class LoginMeta extends StatefulWidget {
@@ -83,7 +85,8 @@ class _LoginMetaState extends State<LoginMeta> {
             print("Success");
             print(_session.accounts[0]);
             print(_session);
-            Get.to(BottomBarStart());
+            _auth.signIpWithEmailPassword("${_session.accounts[0]}@gmail.com", "pass@123");
+            Get.to(BottomBarStart(address: _session.accounts[0]));
           },
         ));
     connector.on(
@@ -135,6 +138,7 @@ class _LoginMetaState extends State<LoginMeta> {
                   ]
               )
           ) :
+              Image.asset('wallet.png'),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 80, 20, 0),
             child: OutlinedButton(

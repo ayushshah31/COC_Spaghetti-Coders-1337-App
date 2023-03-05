@@ -28,6 +28,6 @@ class _WrapperState extends State<Wrapper> {
       // return const LoginPage();
       return const LoginMeta();
     }
-    return BottomBarStart();
+    return BottomBarStart(address: user.uid.split("@")[0],);
   }
 }
